@@ -12,9 +12,9 @@ function MyApp({ Component, pageProps }) {
       <div className='w3-container w3-content' style={{maxWidth:'1400px',marginTop:'80px'}}>
         <Component {...pageProps} />
       </div>
-      {/* <footer className="w3-container w3-theme-d3 w3-padding-16 w3-bottom">
+      <footer className="w3-container w3-theme-d3 w3-bottom">
         <h5>Footer</h5>
-      </footer> */}
+      </footer>
     </div>
   )
 }

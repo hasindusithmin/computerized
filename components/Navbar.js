@@ -1,4 +1,4 @@
-import { FaBars, FaBell, FaEnvelope, FaGlobe, FaHome, FaUser } from "react-icons/fa";
+import { FaBars, FaBell, FaEnvelope, FaGlobe, FaHome, FaUser,FaBlogger } from "react-icons/fa";
 
 export default function Navbar() {
 
@@ -17,7 +17,8 @@ export default function Navbar() {
                 <div className="w3-bar w3-theme-d2 w3-left-align w3-large">
                     <span className="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2"
                         onClick={openNav} ><FaBars/></span>
-                    <span className="w3-bar-item w3-button w3-padding-large w3-theme-d4"> <FaHome style={{verticalAlign:'middle'}}/> Logo</span>
+                    <span className="w3-bar-item w3-button w3-padding-large w3-theme-d4"> <FaBlogger/></span>
+                    <span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Home"> <FaHome/> </span>
                     <span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"> <FaGlobe/> </span>
                     <span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
                         title="Account Settings"> <FaUser /> </span>

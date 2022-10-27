@@ -1,9 +1,12 @@
 import icons from '../public/icons.json';
 import autoComplete from "@tarekraafat/autocomplete.js";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Tags from '../components/Tags';
+import Post from '../components/Post';
 
 export default function Home() {
+
+  const [posts, setPosts] = useState(null);
 
   useEffect(() => {
     const autoCompleteJS = new autoComplete({
@@ -41,11 +44,25 @@ export default function Home() {
       }
     });
 
+    fetch('/api/read')
+      .then(res => res.json())
+      .then(data => { setPosts(data) })
+
   }, [])
 
   return (
     <>
       <div className="w3-row">
+
+        <div className="w3-col l8 s12" id="MiddleColumn">
+          {
+            posts
+            &&
+            posts.map(obj => <Post key={obj['post_id']} obj={obj} />)
+          }
+          <div className='w3-padding-32'></div>
+        </div>
+
         <div className="w3-col l4">
 
           <div className="w3-card w3-round w3-white w3-margin-top">
@@ -78,8 +95,6 @@ export default function Home() {
           </div>
 
         </div>
-
-        <div className="w3-col l8 s12" id="MiddleColumn"></div>
 
 
       </div>
