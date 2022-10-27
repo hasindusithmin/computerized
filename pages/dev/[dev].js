@@ -10,11 +10,22 @@ export default function Dev() {
 
     const [posts, setPosts] = useState(null);
     const [limit, setLimit] = useState(5);
+    const [count,setCount] = useState(0);
     const [Dev,setDev] = useState(false);
 
     const {dev} = router.query;
 
     if (dev !== undefined && !Dev) setDev(dev)
+
+    useEffect(()=>{
+        if (Dev) {
+            fetch(`/api/count?about=${dev}`)
+            .then(res => {
+                if (res.status === 200) return res.text()
+            })
+            .then(count => { setCount(parseInt(count)); })
+        }
+    },[count])
 
     useEffect(() => {
         if (Dev) {
@@ -49,7 +60,7 @@ export default function Dev() {
                     &&
                     <div className='w3-row w3-container'>
                         <div className='w3-half'>
-                            <button className='w3-button w3-gray' onClick={seeMore}>see more...</button>
+                            {limit < count && <button className='w3-button w3-gray' onClick={seeMore}>see more...</button>}
                         </div>
                         <div className='w3-half'>
                             {limit > 5 && <button className='w3-button w3-gray w3-right' onClick={seeLess}>see less...</button>}
