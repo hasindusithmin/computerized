@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaBars, FaBell, FaEnvelope, FaGlobe, FaHome, FaUser, FaFan } from "react-icons/fa";
+import { FaBars, FaEnvelope, FaGlobe, FaHome, FaUser, FaFan } from "react-icons/fa";
 export default function Navbar() {
 
     function openNav() {
@@ -13,7 +13,7 @@ export default function Navbar() {
 
     function modelHandler() {
         const status = document.getElementById('model').style.display;
-        if (status === 'none') document.getElementById('model').style.display = 'block';
+        if (status === 'none' || status === '') document.getElementById('model').style.display = 'block';
         else if (status === 'block') document.getElementById('model').style.display = 'none';
     }
 
@@ -42,13 +42,13 @@ export default function Navbar() {
                 <span className="w3-bar-item w3-button w3-padding-large">My Profile</span>
             </div>
             <div className="w3-modal" id="model">
-                <div className="w3-modal-content w3-card-4 w3-animate-zoom" style={{maxWidth:'200px',maxHeight:'200px'}}>
+                <div className="w3-modal-content w3-card-4 w3-animate-zoom" style={{ maxWidth: '200px', maxHeight: '200px' }}>
                     <div className="w3-padding-64 w3-center w3-theme-d4">
                         <span onClick={modelHandler} className="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
-                            <FaFan className="w3-spin" size={64} />
+                        <FaFan className="w3-spin" size={64} />
                     </div>
                 </div>
             </div>
-            </>
-            )
+        </>
+    )
 }
