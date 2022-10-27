@@ -29,7 +29,7 @@ export default function Home() {
     <>
       <div className="w3-row">
 
-        <div className="w3-col l8 s12" id="MiddleColumn">
+        <div className="w3-col l8 s12">
           {
             posts
             &&

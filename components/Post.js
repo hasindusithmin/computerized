@@ -16,10 +16,10 @@ export default function Post({ obj }) {
     return (
         <div className="w3-container w3-card w3-white w3-round w3-margin" id={post_id} >
             <br />
-            <img src="https://via.placeholder.com/200" alt="PROFILE" className="w3-left w3-circle w3-margin-right" style={{ width: '60px' }} />
+            <img src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${about.toLowerCase()}/${icons[about]}.svg`} alt={about} title={about} className="w3-left w3-circle w3-margin-right" style={{ width: '60px' }} />
             <h4>{username}</h4>
             <br />
-            <span className="w3-right w3-opacity"><img className="w3-tag w3-white" width={16} height={16} src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${about.toLowerCase()}/${icons[about]}.svg`} alt={about} title={about} />&nbsp;${time}</span>
+            <span className="w3-right w3-opacity">{time}</span>
             <hr className="w3-clear" />
             <img src={image} style={{ width: '100%' }} className="w3-margin-bottom" />
             <p>{post}</p>
