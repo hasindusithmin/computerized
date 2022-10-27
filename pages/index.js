@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Tags from '../components/Tags';
 import Post from '../components/Post';
 import Search from '../components/Search';
-
+import Head from 'next/head';
 export default function Home() {
 
   const [posts, setPosts] = useState(null);
@@ -27,6 +27,11 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+                <title>computerize | home</title>
+            </Head>
       <div className="w3-row">
 
         <div className="w3-col l8 s12">
