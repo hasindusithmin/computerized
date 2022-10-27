@@ -6,16 +6,16 @@ const AuthContext = createContext()
 
 export const AuthContextProvider = ({children}) => {
 
-    const [auth,setAuth] = useState(false)
+    const [user,setUser] = useState(null)
 
     useEffect(()=>{
 
         const token = Cookies.get('jwt')
         if (token !== undefined) {
-            jwt.verify(token,process.env.NEXT_PUBLIC_SECRET,(err,dT)=>{
+            jwt.verify(token,process.env.NEXT_PUBLIC_JWT,(err,dT)=>{
                 try {
                     if (err) throw err;
-                    setAuth(true)
+                    setUser(dT)
                 } catch (error) {
                     console.log(error.message);
                 }
@@ -25,7 +25,7 @@ export const AuthContextProvider = ({children}) => {
     },[])
 
     return (
-        <AuthContext.Provider value={auth}>
+        <AuthContext.Provider value={user}>
             {children}
         </AuthContext.Provider>
     )

@@ -16,22 +16,22 @@ export default function Home() {
       .then(data => { setPosts(data) })
   }, [limit])
 
-  const seeMore = ()=>{
+  const seeMore = () => {
     let _ = limit;
-    setLimit(_+=5);
+    setLimit(_ += 5);
   }
-  const seeLess = ()=>{
+  const seeLess = () => {
     let _ = limit;
-    setLimit(_-=5);
+    setLimit(_ -= 5);
   }
 
   return (
     <>
       <Head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-                <title>computerize | home</title>
-            </Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <title>computerize | home</title>
+      </Head>
       <div className="w3-row">
 
         <div className="w3-col l8 s12">
