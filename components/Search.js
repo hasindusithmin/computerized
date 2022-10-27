@@ -1,9 +1,21 @@
 import icons from '../public/icons.json';
 import { useEffect } from "react";
 import autoComplete from "@tarekraafat/autocomplete.js";
-
-
+import { MdScreenSearchDesktop } from 'react-icons/md';
+import {useRouter} from 'next/router';
 export default function Search() {
+
+    const router = useRouter();
+
+    const handler = () => {
+        const topic = document.getElementById('autoComplete').value;
+        if (Object.keys(icons).includes(topic)) {
+            router.push(`/dev/${topic}`)
+            const k = router.asPath.search(/dev/i)
+            if (k === 1) setTimeout(()=>{router.reload()},250)
+        }
+    }
+
 
     useEffect(() => {
         const autoCompleteJS = new autoComplete({
@@ -37,7 +49,8 @@ export default function Search() {
                         const selection = event.detail.selection.value;
                         autoCompleteJS.input.value = selection;
                     }
-                }
+                },
+
             }
         });
 
@@ -47,7 +60,9 @@ export default function Search() {
         <div className="w3-container">
             <p>Search</p>
             <input id="autoComplete" type="search" dir="ltr" spellCheck={false} autoCorrect="off" autoComplete="off" autoCapitalize="off" />
-            <p></p>
+            <div className='w3-center w3-padding'>
+                <button className='w3-button' title='Search' onClick={handler}><MdScreenSearchDesktop size={24}/></button>
+            </div>
         </div>
     )
 }
