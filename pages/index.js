@@ -1,11 +1,53 @@
-
+import icons from '../public/icons.json';
+import autoComplete from "@tarekraafat/autocomplete.js";
+import { useEffect } from 'react';
+import Tags from '../components/Tags';
 
 export default function Home() {
+
+  useEffect(() => {
+    const autoCompleteJS = new autoComplete({
+      selector: "#autoComplete",
+      placeHolder: "Search for Dev...",
+      data: {
+        src: Object.keys(icons),
+        cache: true,
+      },
+      resultsList: {
+        element: (list, data) => {
+          if (!data.results.length) {
+            // Create "No Results" message element
+            const message = document.createElement("div");
+            // Add class to the created element
+            message.setAttribute("class", "no_result");
+            // Add message text content
+            message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+            // Append message element to the results list
+            list.prepend(message);
+          }
+        },
+        noResults: true,
+      },
+      resultItem: {
+        highlight: true
+      },
+      events: {
+        input: {
+          selection: (event) => {
+            const selection = event.detail.selection.value;
+            autoCompleteJS.input.value = selection;
+          }
+        }
+      }
+    });
+
+  }, [])
 
   return (
     <>
       <div className="w3-row">
         <div className="w3-col l4">
+
           <div className="w3-card w3-round w3-white w3-margin-top">
             <div className="w3-container">
               <h4 className="w3-center">My Profile</h4>
@@ -18,20 +60,27 @@ export default function Home() {
               <p><i className="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
             </div>
           </div>
+
           <br />
 
           <div className="w3-card w3-round w3-white">
             <div className="w3-container">
-              <p>Interests</p>
-              <input className="w3-input w3-border" style={{ width: '50%', margin: 'auto' }} placeholder="Search" />
-              <p id="interests"></p>
+              <p>Search</p>
+              <input id="autoComplete" type="search" dir="ltr" spellCheck={false} autoCorrect="off" autoComplete="off" autoCapitalize="off" />
+              <p></p>
             </div>
           </div>
+
           <br />
+
+          <div className="w3-card w3-round w3-white">
+            <Tags />
+          </div>
 
         </div>
 
         <div className="w3-col l8 s12" id="MiddleColumn"></div>
+
 
       </div>
     </>
