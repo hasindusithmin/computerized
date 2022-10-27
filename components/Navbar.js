@@ -1,6 +1,12 @@
 import Link from "next/link";
-import { FaBars, FaEnvelope, FaGlobe, FaHome, FaUser, FaFan } from "react-icons/fa";
+import { FaBars, FaRegistered, FaHome, FaUser, FaFan } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg"
+import { GoSignIn, GoSignOut } from "react-icons/go";
+import AuthContext from "../authcontext";
+import { useContext } from "react";
 export default function Navbar() {
+
+   const {auth} = useContext(AuthContext)
 
     function openNav() {
         var x = document.getElementById("navDemo");
@@ -25,18 +31,24 @@ export default function Navbar() {
                         onClick={openNav} ><FaBars /></span>
                     <span className="w3-bar-item w3-button w3-padding-large w3-theme-d4" onClick={modelHandler}><FaFan className="w3-spin" /></span>
                     <Link href="/"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Home"><FaHome /></span></Link>
-                    <span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"> <FaGlobe /> </span>
-                    <span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
-                        title="Account Settings"> <FaUser /> </span>
-                    <span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"> <FaEnvelope /> </span>
-                    <span className="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white"
-                        title="My Account">
-                        <img src="https://via.placeholder.com/200" className="w3-circle" style={{ height: '23px', width: '23px' }} alt="Avatar" />
-                    </span>
+                    {
+                        !auth &&
+                        <>
+                            <Link href="/login"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Login"><GoSignIn /></span></Link>
+                            <Link href="/signup"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Signup"><FaRegistered /></span></Link>
+                        </>
+                    }
+                    {
+                        auth &&
+                        <>
+                            <Link href="/profile"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Profile"><CgProfile /></span></Link>
+                            <Link href="/logout"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Logout"><GoSignOut /></span></Link>
+                        </>
+                    }
                 </div>
             </div>
             <div id="navDemo" className="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
-                <span className="w3-bar-item w3-button w3-padding-large">Link 1</span>
+                <span className="w3-bar-item w3-button w3-padding-large">Home</span>
                 <span className="w3-bar-item w3-button w3-padding-large">Link 2</span>
                 <span className="w3-bar-item w3-button w3-padding-large">Link 3</span>
                 <span className="w3-bar-item w3-button w3-padding-large">My Profile</span>
