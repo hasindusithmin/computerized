@@ -11,7 +11,7 @@ export default function Tags() {
     }
 
     return (
-        <div className="w3-container">
+        <div className="w3-container w3-center">
             <p>Tags</p>
             <p>
                 {

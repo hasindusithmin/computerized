@@ -63,6 +63,11 @@ export default function Dev() {
             </Head>
             <div className="w3-row">
                 <div className="w3-col l8 s12">
+
+                    {
+                        count === 0 && <div className="w3-panel w3-pale-red w3-xlarge w3-leftbar">Empty</div>
+                    }
+
                     {
                         posts
                         &&

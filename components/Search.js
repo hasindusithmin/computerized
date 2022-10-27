@@ -57,7 +57,7 @@ export default function Search() {
     }, [])
 
     return (
-        <div className="w3-container">
+        <div className="w3-container w3-center">
             <p>Search</p>
             <input id="autoComplete" type="search" dir="ltr" spellCheck={false} autoCorrect="off" autoComplete="off" autoCapitalize="off" />
             <div className='w3-center w3-padding'>
