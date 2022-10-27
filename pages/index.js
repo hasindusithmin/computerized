@@ -1,54 +1,29 @@
-import icons from '../public/icons.json';
-import autoComplete from "@tarekraafat/autocomplete.js";
 import { useEffect, useState } from 'react';
 import Tags from '../components/Tags';
 import Post from '../components/Post';
+import Search from '../components/Search';
 
 export default function Home() {
 
   const [posts, setPosts] = useState(null);
+  const [limit, setLimit] = useState(5);
 
   useEffect(() => {
-    const autoCompleteJS = new autoComplete({
-      selector: "#autoComplete",
-      placeHolder: "Search for Dev...",
-      data: {
-        src: Object.keys(icons),
-        cache: true,
-      },
-      resultsList: {
-        element: (list, data) => {
-          if (!data.results.length) {
-            // Create "No Results" message element
-            const message = document.createElement("div");
-            // Add class to the created element
-            message.setAttribute("class", "no_result");
-            // Add message text content
-            message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
-            // Append message element to the results list
-            list.prepend(message);
-          }
-        },
-        noResults: true,
-      },
-      resultItem: {
-        highlight: true
-      },
-      events: {
-        input: {
-          selection: (event) => {
-            const selection = event.detail.selection.value;
-            autoCompleteJS.input.value = selection;
-          }
-        }
-      }
-    });
-
-    fetch('/api/read')
-      .then(res => res.json())
+    fetch(`/api/read?limit=${limit}`)
+      .then(res => {
+        if (res.status === 200) return res.json()
+      })
       .then(data => { setPosts(data) })
+  }, [limit])
 
-  }, [])
+  const seeMore = ()=>{
+    let _ = limit;
+    setLimit(_+=5);
+  }
+  const seeLess = ()=>{
+    let _ = limit;
+    setLimit(_-=5);
+  }
 
   return (
     <>
@@ -60,7 +35,22 @@ export default function Home() {
             &&
             posts.map(obj => <Post key={obj['post_id']} obj={obj} />)
           }
+
+          {
+            posts
+            &&
+            <div className='w3-row w3-container'>
+              <div className='w3-half'>
+                <button className='w3-button w3-gray' onClick={seeMore}>see more...</button>
+              </div>
+              <div className='w3-half'>
+                {limit > 5 && <button className='w3-button w3-gray w3-right' onClick={seeLess}>see less...</button>}
+              </div>
+            </div>
+          }
+
           <div className='w3-padding-32'></div>
+
         </div>
 
         <div className="w3-col l4">
@@ -81,11 +71,7 @@ export default function Home() {
           <br />
 
           <div className="w3-card w3-round w3-white">
-            <div className="w3-container">
-              <p>Search</p>
-              <input id="autoComplete" type="search" dir="ltr" spellCheck={false} autoCorrect="off" autoComplete="off" autoCapitalize="off" />
-              <p></p>
-            </div>
+            <Search />
           </div>
 
           <br />
