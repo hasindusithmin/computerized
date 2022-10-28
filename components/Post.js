@@ -1,16 +1,23 @@
 import icons from "../public/icons.json";
-import { FaComment, FaThumbsUp,FaPlus } from "react-icons/fa";
+import { FaComment, FaThumbsUp, FaPlus } from "react-icons/fa";
 
 
 export default function Post({ obj }) {
 
-    const { post_id, time, about, username, image, post, likes,comments } = obj;
+    const { post_id, time, about, username, image, post, likes, comments } = obj;
 
     const commentHandler = e => {
         const id = e.target.parentNode.id;
         const current = document.querySelector(`#${id} #comments`).className;
         const class_name = current === 'w3-hide' ? 'w3-show' : 'w3-hide';
         document.querySelector(`#${id} #comments`).className = class_name;
+    }
+
+    const modelHandler = (id) => {
+        const model = document.getElementById(`model-${id}`);
+        if (model !== null) {
+            document.getElementById(`model-${id}`).style.display = 'block'
+        }
     }
 
     return (
@@ -22,20 +29,45 @@ export default function Post({ obj }) {
             <span className="w3-right w3-opacity">{time}</span>
             <hr className="w3-clear" />
             <img src={image} style={{ width: '100%' }} className="w3-margin-bottom" />
-            <p>{post}</p>
+            <div onClick={()=>{modelHandler(post_id)}}>
+                {
+                    likes.length > 0
+                    &&
+                    <span><FaThumbsUp /> {likes[0]} </span>
+                }
+                {
+                    likes.length > 1 &&
+                    <span>and {likes.length - 1} other likes</span>
+                }
+            </div>
+            {
+                likes.length > 1 &&
+                <div className="w3-modal" id={`model-${post_id}`}>
+                    <div className="w3-modal-content w3-animate-zoom" style={{maxWidth:'300px'}}>
+                    <span onClick={()=>{document.getElementById(`model-${post_id}`).style.display='none'}} className="w3-button w3-display-topright">&times;</span>
+                        <ul className="w3-ul">
+                            {
+                                likes.map(like=><li key={like}><FaThumbsUp color="blue" /> {like}</li>)
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+            <hr className="w3-clear" />
             <button type="button" className="w3-button w3-theme-d1 w3-margin-bottom">
-                <FaThumbsUp /> Like <span className="w3-tag">{likes}</span>
+                <FaThumbsUp /> Like
             </button>
             &nbsp;
             <button type="button" className="w3-button w3-theme-d2 w3-margin-bottom" onClick={commentHandler}>
                 <FaComment /> Comment </button>
+            <p>{post}</p>
             <div className="w3-hide" id="comments">
                 <div className="w3-row">
                     <div className="w3-threequarter">
-                        <input className="w3-input w3-border" placeholder="Add comment ..."/>
+                        <input className="w3-input w3-border" placeholder="Add comment ..." />
                     </div>
                     <div className="w3-quarter">
-                        <button className="w3-button w3-block w3-gray"><FaPlus/></button>
+                        <button className="w3-button w3-block w3-gray"><FaPlus /></button>
                     </div>
                 </div>
                 {
