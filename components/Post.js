@@ -58,9 +58,15 @@ export default function Post({ obj }) {
             if (comment !== '') {
                 const res = await fetch('/api/putComment', {
                     method: 'POST',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
                     body: JSON.stringify(reqBody)
                 })
-                if (res.ok) router.replace('/')
+                if (res.ok) {
+                    setComment('')
+                    router.replace('/')
+                }
 
                 else {
                     const { error } = await res.json()

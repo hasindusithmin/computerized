@@ -2,10 +2,10 @@ import supabase from "../../db";
 
 export default async function handler(req, res) {
     try {
-        const data = req.body;
+        const {comment,user_id,post_id,username,time} = req.body;
         const { error } = await supabase
             .from('comments')
-            .insert(data)
+            .insert({comment,user_id,post_id,username,time})
         if (error) throw error
         res.status(200).json({})
     } catch (error) {
