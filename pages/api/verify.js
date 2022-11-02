@@ -10,7 +10,6 @@ export default function verify(req,res) {
             if (err) throw err
             res.status(202).json(dT)
         })
-        res.status(202).json({})
     } catch (error) {
         res.status(403).json({error:error.message})
     }

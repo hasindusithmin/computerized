@@ -20,6 +20,10 @@ export default function Post({ obj }) {
         }
     }
 
+    const putLike = (id) => {
+        console.log(id);
+    }
+
     return (
         <div className="w3-container w3-card w3-white w3-round w3-margin" id={post_id} >
             <br />
@@ -54,7 +58,7 @@ export default function Post({ obj }) {
                 </div>
             }
             <hr className="w3-clear" />
-            <button type="button" className="w3-button w3-theme-d1 w3-margin-bottom">
+            <button type="button" className="w3-button w3-theme-d1 w3-margin-bottom" onClick={()=>{putLike(post_id)}}>
                 <FaThumbsUp /> Like
             </button>
             &nbsp;

@@ -13,7 +13,7 @@ export const AuthContextProvider = ({children}) => {
         if (hasCookie('jwt')) {
             const tkn = getCookie('jwt')
             jwt.verify(tkn,process.env.NEXT_PUBLIC_JWT,(err,dT)=>{
-                if (dT) setUser(true)
+                if (dT) setUser(dT)
             })
 
         }

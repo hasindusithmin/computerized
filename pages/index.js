@@ -7,7 +7,7 @@ import AuthContext from '../authcontext';
 
 export default function Home() {
 
-  const auth = useContext(AuthContext)
+  const user = useContext(AuthContext)
 
   const [posts, setPosts] = useState(null);
   const [limit, setLimit] = useState(5);
@@ -64,17 +64,15 @@ export default function Home() {
 
         <div className="w3-col l4">
           {
-            auth &&
+            user &&
             <div className="w3-card w3-round w3-white w3-margin-top">
               <div className="w3-container">
-                <h4 className="w3-center">My Profile</h4>
+                <h4 className="w3-center">{user.first_name} {user.last_name}</h4>
                 <p className="w3-center">
-                  <img src="https://via.placeholder.com/200" className="w3-circle" style={{ height: '106px', width: '106px' }} alt="Avatar" />
+                  <img src={Object.keys(user).includes('photo_url') ? user.photo_url:'https://via.placeholder.com/320x320/afeeee'} className="w3-circle" style={{ height: '106px', width: '106px' }} alt="Avatar" />
                 </p>
                 <hr />
-                <p><i className="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
-                <p><i className="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
-                <p><i className="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
+                <p><i className="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>{new Date(user.auth_date * 1000).toUTCString()}</p>
               </div>
             </div>
           }

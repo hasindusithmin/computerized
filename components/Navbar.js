@@ -7,6 +7,7 @@ import { useContext } from "react";
 export default function Navbar() {
 
    const context = useContext(AuthContext);
+   
 
     function openNav() {
         var x = document.getElementById("navDemo");
