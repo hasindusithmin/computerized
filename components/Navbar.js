@@ -6,7 +6,7 @@ import AuthContext from "../authcontext";
 import { useContext } from "react";
 export default function Navbar() {
 
-   const context = useContext(AuthContext)
+   const context = useContext(AuthContext);
 
     function openNav() {
         var x = document.getElementById("navDemo");
@@ -33,10 +33,7 @@ export default function Navbar() {
                     <Link href="/"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Home"><FaHome /></span></Link>
                     {
                         !context &&
-                        <>
-                            <Link href="/login"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Login"><GoSignIn /></span></Link>
-                            <Link href="/signup"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Signup"><FaRegistered /></span></Link>
-                        </>
+                        <Link href="/login"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Login"><GoSignIn /></span></Link>
                     }
                     {
                         context &&

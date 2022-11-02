@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react"
-import Cookies from 'js-cookie'
+import { hasCookie,getCookie } from 'cookies-next';
 import jwt from "jsonwebtoken"
 
 const AuthContext = createContext()
@@ -10,17 +10,14 @@ export const AuthContextProvider = ({children}) => {
 
     useEffect(()=>{
 
-        const token = Cookies.get('jwt')
-        if (token !== undefined) {
-            jwt.verify(token,process.env.NEXT_PUBLIC_JWT,(err,dT)=>{
-                try {
-                    if (err) throw err;
-                    setUser(dT)
-                } catch (error) {
-                    console.log(error.message);
-                }
+        if (hasCookie('jwt')) {
+            const tkn = getCookie('jwt')
+            jwt.verify(tkn,process.env.NEXT_PUBLIC_JWT,(err,dT)=>{
+                if (dT) setUser(dT)
             })
+
         }
+        
 
     },[])
 
