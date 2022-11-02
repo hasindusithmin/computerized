@@ -6,14 +6,14 @@ const AuthContext = createContext()
 
 export const AuthContextProvider = ({children}) => {
 
-    const [user,setUser] = useState(null)
+    const [user,setUser] = useState(false)
 
     useEffect(()=>{
 
         if (hasCookie('jwt')) {
             const tkn = getCookie('jwt')
             jwt.verify(tkn,process.env.NEXT_PUBLIC_JWT,(err,dT)=>{
-                if (dT) setUser(dT)
+                if (dT) setUser(true)
             })
 
         }

@@ -24,7 +24,7 @@ export default function handler(req, res) {
         if (!auth) throw Error("Forbidden")
         const tkn = jwt.sign(payload,process.env.NEXT_PUBLIC_JWT,{expiresIn:'1h'})
         setCookie('jwt',tkn, { req, res, maxAge: 60 * 60})
-        res.status(202).json({message:"Accepted"})
+        res.redirect('/')
     } catch (error) {
         res.status(403).json({message:error.message})
     }
