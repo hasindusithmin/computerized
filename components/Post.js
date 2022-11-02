@@ -1,5 +1,6 @@
 import icons from "../public/icons.json";
 import { FaComment, FaThumbsUp, FaPlus } from "react-icons/fa";
+import { useState } from "react";
 
 
 export default function Post({ obj }) {
@@ -20,8 +21,15 @@ export default function Post({ obj }) {
         }
     }
 
-    const putLike = (id) => {
-        console.log(id);
+
+    const putLike = async(post_id) => {
+        const _ = await fetch('/api/verify')
+        const d = await _.json()
+        if (_.ok) {
+            const {first_name,last_name} = d;
+            await fetch(`/api/putLike?post_id=${post_id}&user_name=${first_name}%20${last_name}`)
+        }
+        
     }
 
     return (

@@ -16,7 +16,7 @@ export default function Profile() {
         fetch('/api/verify')
             .then(async (res) => {
                 const data = await res.json()
-                if (res.status === 202) {
+                if (res.ok) {
                     const { id, first_name, last_name, auth_date } = data;
                     set_id(id)
                     set_auth_date(auth_date)

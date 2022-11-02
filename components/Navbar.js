@@ -41,6 +41,7 @@ export default function Navbar() {
                         <>
                             <Link href="/profile"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Profile"><CgProfile /></span></Link>
                             <Link href="/api/logout"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Logout"><GoSignOut /></span></Link>
+                            <span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-right">{context.first_name} {context.last_name}</span>
                         </>
                     }
                 </div>
