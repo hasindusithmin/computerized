@@ -11,6 +11,7 @@ export default async function handler(req, res) {
         if (error) throw error;
         if (data.length === 0) throw Error("Not Found")
         const likes = data[0]['likes']
+        if (likes.includes(user_name)) throw Error("Already Liked!")
         likes.push(user_name)
         const result = await supabase
             .from('posts')

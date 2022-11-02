@@ -1,9 +1,13 @@
 import icons from "../public/icons.json";
 import { FaComment, FaThumbsUp, FaPlus } from "react-icons/fa";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 
 export default function Post({ obj }) {
+
+    const router = useRouter();
+    const [comment, setComment] = useState('')
 
     const { post_id, time, about, username, image, post, likes, comments } = obj;
 
@@ -22,14 +26,53 @@ export default function Post({ obj }) {
     }
 
 
-    const putLike = async(post_id) => {
+    const putLike = async (post_id) => {
         const _ = await fetch('/api/verify')
         const d = await _.json()
         if (_.ok) {
-            const {first_name,last_name} = d;
-            await fetch(`/api/putLike?post_id=${post_id}&user_name=${first_name}%20${last_name}`)
+            const { first_name, last_name } = d;
+            const res = await fetch(`/api/putLike?post_id=${post_id}&user_name=${first_name}%20${last_name}`)
+            if (res.ok) router.replace('/')
+            else {
+                const { error } = await res.json()
+                alert(error)
+            }
         }
-        
+        else {
+            router.replace('/login')
+        }
+    }
+
+    const putComment = async (post_id) => {
+        const _ = await fetch('/api/verify')
+        const d = await _.json()
+        if (_.ok) {
+            const { id, first_name, last_name } = d;
+            const reqBody = {
+                comment,
+                user_id: id,
+                post_id,
+                username: `${first_name} ${last_name}`,
+                time: new Date().toUTCString()
+            }
+            if (comment !== '') {
+                const res = await fetch('/api/putComment', {
+                    method: 'POST',
+                    body: JSON.stringify(reqBody)
+                })
+                if (res.ok) router.replace('/')
+
+                else {
+                    const { error } = await res.json()
+                    alert(error)
+                }
+            }
+
+
+        }
+        else {
+            router.replace('/login')
+        }
     }
 
     return (
@@ -41,7 +84,7 @@ export default function Post({ obj }) {
             <span className="w3-right w3-opacity">{time}</span>
             <hr className="w3-clear" />
             <img src={image} style={{ width: '100%' }} className="w3-margin-bottom" />
-            <div onClick={()=>{modelHandler(post_id)}}>
+            <div onClick={() => { modelHandler(post_id) }}>
                 {
                     likes.length > 0
                     &&
@@ -55,18 +98,18 @@ export default function Post({ obj }) {
             {
                 likes.length > 1 &&
                 <div className="w3-modal" id={`model-${post_id}`}>
-                    <div className="w3-modal-content w3-animate-zoom" style={{maxWidth:'300px'}}>
-                    <span onClick={()=>{document.getElementById(`model-${post_id}`).style.display='none'}} className="w3-button w3-display-topright">&times;</span>
+                    <div className="w3-modal-content w3-animate-zoom" style={{ maxWidth: '300px' }}>
+                        <span onClick={() => { document.getElementById(`model-${post_id}`).style.display = 'none' }} className="w3-button w3-display-topright">&times;</span>
                         <ul className="w3-ul">
                             {
-                                likes.map(like=><li key={like}><FaThumbsUp color="blue" /> {like}</li>)
+                                likes.map(like => <li key={like}><FaThumbsUp color="blue" /> {like}</li>)
                             }
                         </ul>
                     </div>
                 </div>
             }
             <hr className="w3-clear" />
-            <button type="button" className="w3-button w3-theme-d1 w3-margin-bottom" onClick={()=>{putLike(post_id)}}>
+            <button type="button" className="w3-button w3-theme-d1 w3-margin-bottom" onClick={() => { putLike(post_id) }}>
                 <FaThumbsUp /> Like
             </button>
             &nbsp;
@@ -76,10 +119,10 @@ export default function Post({ obj }) {
             <div className="w3-hide" id="comments">
                 <div className="w3-row">
                     <div className="w3-threequarter">
-                        <input className="w3-input w3-border" placeholder="Add comment ..." />
+                        <input className="w3-input w3-border" placeholder="Add comment ..." value={comment} onInput={e => setComment(e.target.value)} />
                     </div>
                     <div className="w3-quarter">
-                        <button className="w3-button w3-block w3-gray"><FaPlus /></button>
+                        <button className="w3-button w3-block w3-gray" onClick={() => { putComment(post_id) }}><FaPlus /></button>
                     </div>
                 </div>
                 {
