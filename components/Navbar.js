@@ -1,14 +1,15 @@
 import Link from "next/link";
 import { FaBars, FaHome, FaFan } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg"
-import { GoSignIn, GoSignOut } from "react-icons/go";IoIosCreate
-import {IoIosCreate} from "react-icons/io"
+import { GoSignIn, GoSignOut } from "react-icons/go"; IoIosCreate
+import { IoIosCreate } from "react-icons/io"
 import AuthContext from "../authcontext";
 import { useContext } from "react";
+import { useRouter } from "next/router";
 export default function Navbar() {
 
-   const context = useContext(AuthContext);
-   
+    const context = useContext(AuthContext);
+    const router = useRouter()
 
     function openNav() {
         var x = document.getElementById("navDemo");
@@ -23,6 +24,17 @@ export default function Navbar() {
         const status = document.getElementById('model').style.display;
         if (status === 'none' || status === '') document.getElementById('model').style.display = 'block';
         else if (status === 'block') document.getElementById('model').style.display = 'none';
+    }
+
+    function handler(e) {
+        const id = e.target.id;
+        if (id !== '') {
+            if (id === 'home') router.replace('/')
+            else if (id === 'logout')  router.replace('/api/logout')
+            else {
+                router.replace(`/${id}`)
+            }
+        }
     }
 
     return (
@@ -41,7 +53,7 @@ export default function Navbar() {
                         context &&
                         <>
                             <Link href="/profile"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Profile"><CgProfile /></span></Link>
-                            <Link href="/create"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create"><IoIosCreate /></span></Link>
+                            <Link href="/create"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Profile"><IoIosCreate /></span></Link>
                             <Link href="/api/logout"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Logout"><GoSignOut /></span></Link>
                             <span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-right">{context.first_name} {context.last_name}</span>
                         </>
@@ -49,10 +61,68 @@ export default function Navbar() {
                 </div>
             </div>
             <div id="navDemo" className="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
-                <span className="w3-bar-item w3-button w3-padding-large">Home</span>
-                <span className="w3-bar-item w3-button w3-padding-large">Link 2</span>
-                <span className="w3-bar-item w3-button w3-padding-large">Link 3</span>
-                <span className="w3-bar-item w3-button w3-padding-large">My Profile</span>
+                {
+                    !context &&
+                    <>
+                        <span className="w3-bar-item w3-button w3-padding-large">Home</span>
+
+                        <span className="w3-bar-item w3-button w3-padding-large" onClick={handler} id="home">
+                            <>
+                                <FaHome style={{ verticalAlign: 'middle' }} />
+                                &nbsp;
+                                <span style={{ verticalAlign: 'middle' }}>Home</span>
+                            </>
+                        </span>
+                        <span className="w3-bar-item w3-button w3-padding-large" onClick={handler} id="login">
+                            <Link href="/login">
+                                <>
+                                    <GoSignIn style={{ verticalAlign: 'middle' }} />
+                                    &nbsp;
+                                    <span style={{ verticalAlign: 'middle' }}>Login</span>
+                                </>
+                            </Link>
+                        </span>
+                    </>
+
+                }
+                {
+                    context &&
+                    <>
+                        <span className="w3-bar-item w3-button w3-padding-large">Home</span>
+
+                        <span className="w3-bar-item w3-button w3-padding-large">
+                            <span style={{ verticalAlign: 'middle' }}>{context.first_name} {context.last_name}</span>
+                        </span>
+                        <span className="w3-bar-item w3-button w3-padding-large" id="home" onClick={handler}>
+                            <>
+                                <FaHome style={{ verticalAlign: 'middle' }} />
+                                &nbsp;
+                                <span style={{ verticalAlign: 'middle' }}>Home</span>
+                            </>
+                        </span>
+                        <span className="w3-bar-item w3-button w3-padding-large" id="profile" onClick={handler}>
+                            <>
+                                <CgProfile style={{ verticalAlign: 'middle' }} />
+                                &nbsp;
+                                <span style={{ verticalAlign: 'middle' }}>Profile</span>
+                            </>
+                        </span>
+                        <span className="w3-bar-item w3-button w3-padding-large" id="create" onClick={handler}>
+                            <>
+                                <IoIosCreate style={{ verticalAlign: 'middle' }} />
+                                &nbsp;
+                                <span style={{ verticalAlign: 'middle' }}>Create</span>
+                            </>
+                        </span>
+                        <span className="w3-bar-item w3-button w3-padding-large" id="logout" onClick={handler}>
+                            <>
+                                <GoSignOut style={{ verticalAlign: 'middle' }} />
+                                &nbsp;
+                                <span style={{ verticalAlign: 'middle' }}>Logout</span>
+                            </>
+                        </span>
+                    </>
+                }
             </div>
             <div className="w3-modal" id="model">
                 <div className="w3-modal-content w3-card-4 w3-animate-zoom" style={{ maxWidth: '200px', maxHeight: '200px' }}>
