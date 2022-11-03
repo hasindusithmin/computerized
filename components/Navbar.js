@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { FaBars, FaRegistered, FaHome, FaUser, FaFan } from "react-icons/fa";
+import { FaBars, FaHome, FaFan } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg"
-import { GoSignIn, GoSignOut } from "react-icons/go";
+import { GoSignIn, GoSignOut } from "react-icons/go";IoIosCreate
+import {IoIosCreate} from "react-icons/io"
 import AuthContext from "../authcontext";
 import { useContext } from "react";
 export default function Navbar() {
@@ -40,6 +41,7 @@ export default function Navbar() {
                         context &&
                         <>
                             <Link href="/profile"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Profile"><CgProfile /></span></Link>
+                            <Link href="/create"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create"><IoIosCreate /></span></Link>
                             <Link href="/api/logout"><span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Logout"><GoSignOut /></span></Link>
                             <span className="w3-bar-item w3-button w3-hide-small w3-padding-large w3-right">{context.first_name} {context.last_name}</span>
                         </>
