@@ -35,6 +35,7 @@ export default function Navbar() {
                 router.replace(`/${id}`)
             }
         }
+        openNav()
     }
 
     return (

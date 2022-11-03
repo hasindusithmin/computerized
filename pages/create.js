@@ -124,9 +124,9 @@ export default function Create() {
             </Head>
             <div className="w3-row w3-center">
                 <div>
-                    <img src={url} alt="Preview" width={600} height={400} />
+                    <img src={url} alt="Preview" width={600} height={400} className="w3-image"/>
                 </div>
-                <form style={{ margin: 'auto', width: '60%' }} method='POST' onSubmit={addPost}>
+                <form style={{ margin: 'auto'}} method='POST' onSubmit={addPost}>
                     <div className="w3-section">
                         <label><b>About</b></label>
                         <input className="w3-input w3-border" id="about" type="search" dir="ltr" spellCheck={false} autoCorrect="off" autoComplete="off" autoCapitalize="off" value={about} onChange={e => setAbout(e.target.value)} onBlur={e => setAbout(e.target.value)} />
